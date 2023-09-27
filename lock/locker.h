@@ -1,11 +1,5 @@
 #pragma once
 
-//线程同步机制包装类
-//多线程同步，确保任一时刻只能有一个线程能进入关键代码段
-// *信号量
-// *互斥量
-// *条件变量
-
 #include <semaphore.h>
 #include <exception>
 #include <pthread.h>
