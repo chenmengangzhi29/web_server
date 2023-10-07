@@ -7,6 +7,9 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <sys/epoll.h>
+#include <sys/mman.h>
+#include <sys/uio.h>
+
 
 
 
@@ -77,7 +80,7 @@ public:
 private:
     void init();
     HTTP_CODE process_read();
-    bool processs_write(HTTP_CODE ret);
+    bool process_write(HTTP_CODE ret);
     HTTP_CODE parse_request_line(char *text);
     HTTP_CODE parse_headers(char *text);
     HTTP_CODE parse_content(char *text);
