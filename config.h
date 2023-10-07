@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <string>
 
+#include "webserver.h"
+
 using namespace std;
 
 class Config
@@ -41,5 +43,9 @@ public:
     int close_log;
 
     //并发模型选择
+    //1.Reactor模式，要求主线程（I/O处理单元）只负责监听文件描述上
+    //  是否有事件发生，有的话就立即将该事件通知工作线程（逻辑单元）。
+    //2.Proactor模式，将所有I/O操作都交给主线程和内核来处理，
+    //  工作线程仅仅负责业务逻辑。
     int actor_model;
 };
