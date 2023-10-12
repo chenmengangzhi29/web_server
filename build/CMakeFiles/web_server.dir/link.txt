@@ -1,1 +1,0 @@
-/usr/bin/c++   -std=c++11 -Wall -lpthread -L/usr/lib/mysql -lmysqlclient -g  -rdynamic CMakeFiles/web_server.dir/main.cpp.o  -o web_server  libserver_lib.a -lmysqlclient 
