@@ -1,0 +1,2 @@
+/usr/bin/ar qc libserver_lib.a  CMakeFiles/server_lib.dir/config.cpp.o CMakeFiles/server_lib.dir/webserver.cpp.o CMakeFiles/server_lib.dir/CGImysql/sql_connection_pool.cpp.o CMakeFiles/server_lib.dir/http/http_conn.cpp.o CMakeFiles/server_lib.dir/log/log.cpp.o CMakeFiles/server_lib.dir/timer/lst_timer.cpp.o
+/usr/bin/ranlib libserver_lib.a

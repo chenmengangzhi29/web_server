@@ -35,10 +35,10 @@ void http_conn::initmysql_result(connection_pool *connPool)
     MYSQL_RES *result = mysql_store_result(mysql);
 
     //返回结果集中的列数
-    int num_fields = mysql_num_fields(result);
+    // int num_fields = mysql_num_fields(result);
     
     //返回所有字段结构的数组
-    MYSQL_FIELD *fields = mysql_fetch_fields(result);
+    // MYSQL_FIELD *fields = mysql_fetch_fields(result);
 
     //从结果集中获取下一行，将对应的用户名和密码，存入map中
     while(MYSQL_ROW row = mysql_fetch_row(result))
@@ -396,7 +396,7 @@ http_conn::HTTP_CODE http_conn::do_request()
     if (cgi == 1 && (*(p + 1) == '2' || *(p + 1) == '3'))
     {
         //根据标志判断是登录检测还是注册检测
-        char flag = m_url[1];
+        // char flag = m_url[1];
 
         char *m_url_real = (char *)malloc(sizeof(char ) * 200);
         strcpy(m_url_real, "/");
@@ -522,7 +522,7 @@ void http_conn::unmap()
     }
 }
 
-bool http_conn::wirte()
+bool http_conn::write()
 {
     int temp = 0;
 
@@ -550,7 +550,7 @@ bool http_conn::wirte()
 
         bytes_have_send += temp;
         bytes_to_send -= temp;
-        if (bytes_have_send >= m_iv[0].iov_len)
+        if (bytes_have_send >= (int)m_iv[0].iov_len)
         {
             m_iv[0].iov_len = 0;
             m_iv[1].iov_base = m_file_address + (bytes_have_send - m_write_idx);
