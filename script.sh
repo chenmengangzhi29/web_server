@@ -7,7 +7,7 @@ then
 elif [ $1 = "git" ]
 then
 	git add .
-	git commit -m "添加git忽略规则"
+	git commit -m "添加webbench压力测试"
 	git checkout -b feature
 	git push origin feature
 	git checkout main
