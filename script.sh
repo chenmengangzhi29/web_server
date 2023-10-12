@@ -7,7 +7,7 @@ then
 elif [ $1 = "git" ]
 then
 	git add .
-	git commit -m "添加webbench压力测试"
+	git commit -m "更新压力测试README.md"
 	git checkout -b feature
 	git push origin feature
 	git checkout main
