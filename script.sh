@@ -7,7 +7,7 @@ then
 elif [ $1 = "git" ]
 then
 	git add .
-	git commit -m "添加CMakeLists.txt, 调试完成"
+	git commit -m "添加git忽略规则"
 	git checkout -b feature
 	git push origin feature
 	git checkout main
