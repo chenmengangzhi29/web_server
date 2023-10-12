@@ -4,6 +4,7 @@
 */
 #pragma once
 
+#include <sys/time.h>
 #include "../lock/locker.h"
 using namespace std;
 
@@ -22,7 +23,7 @@ public:
         m_array = new T[max_size];
         m_size = 0;
         m_front = -1;
-        m_back = -1；
+        m_back = -1;
     }
 
     void clear()
@@ -59,7 +60,7 @@ public:
     //判断队列是否为空
     bool empty()
     {
-        m_mutex_lock();
+        m_mutex.lock();
         if(0 == m_size)
         {
             m_mutex.unlock();

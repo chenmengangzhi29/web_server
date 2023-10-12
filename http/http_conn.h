@@ -68,7 +68,7 @@ public:
     void close_conn(bool real_close = true);
     void process();
     bool read_once();
-    bool wirte();
+    bool write();
     sockaddr_in *get_address()
     {
         return &m_address;

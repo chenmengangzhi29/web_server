@@ -97,7 +97,7 @@ void WebServer::sql_pool()
 void WebServer::thread_pool()
 {
     //线程池
-    m_pool = new threadpool<http_conn>(m_actormodel, m_connPool, m_thread_num);
+    m_pool = new threadpool<http_conn>(m_connPool, m_actormodel, m_thread_num);
 }
 
 void WebServer::eventListen()
@@ -135,7 +135,7 @@ void WebServer::eventListen()
     utils.init(TIMESLOT);
 
     //epoll创建内核事件表
-    epoll_event events[MAX_EVENT_NUMBER];
+    //epoll_event events[MAX_EVENT_NUMBER];
     m_epollfd = epoll_create(5);
     assert(m_epollfd != -1);
 
@@ -246,7 +246,7 @@ bool WebServer::dealclientdata()
 bool WebServer::dealwithsignal(bool &timeout, bool &stop_server)
 {
     int ret = 0;
-    int sig;
+    // int sig;
     char signals[1024];
     ret = recv(m_pipefd[0], signals, sizeof(signals), 0);
     if (ret == -1)
@@ -361,7 +361,7 @@ void WebServer::dealwithwrite(int sockfd)
     else
     {
         //proacotr
-        if (users[sockfd].wirte())
+        if (users[sockfd].write())
         {
             LOG_INFO("send data to the clien(%s)", inet_ntoa(users[sockfd].get_address()->sin_addr));
 
