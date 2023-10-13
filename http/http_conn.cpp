@@ -264,7 +264,7 @@ http_conn::HTTP_CODE http_conn::parse_request_line(char *text)
         return BAD_REQUEST;
     *m_version++ = '\0';
     m_version += strspn(m_version, " \t");
-    if (strcasecmp(m_version, "HTTP/1.1") != 0)
+    if (strcasecmp(m_version, "HTTP/1.1") != 0 && strcasecmp(m_version, "HTTP/1.0") != 0)
         return BAD_REQUEST;
     if (strncasecmp(m_url, "http://", 7) == 0)
     {
