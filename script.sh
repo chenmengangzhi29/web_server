@@ -8,7 +8,7 @@ then
 elif [ $1 = "git" ]
 then
 	git add .
-	git commit -m "建立log_file文件夹保存日志文件"
+	git commit -m "上传压力测试结果图，修改README.md"
 	git checkout -b feature
 	git push origin feature
 	git checkout main
@@ -16,10 +16,10 @@ then
 elif [ $1 = "clean" ]
 then 
 	rm -rf build log_file
-elif [ $1 = "clean log" ]
+elif [ $1 = "clean_log" ]
 then
-	rm -rf log_file
-elif [ $1 = "clean build" ]
+	rm -rf log_file/*
+elif [ $1 = "clean_build" ]
 then 
 	rm -rf build
 else
