@@ -8,7 +8,7 @@ then
 elif [ $1 = "git" ]
 then
 	git add .
-	git commit -m "上传压力测试结果图，修改README.md"
+	git commit -m "更新README.md"
 	git checkout -b feature
 	git push origin feature
 	git checkout main
