@@ -17,20 +17,28 @@
 > * 所有访问均成功
 
 > * Proactor, LT + LT, 
+<div align=center><img src="https://github.com/chenmengangzhi29/web_server/blob/c32d8d319151cd7ec8b9acfff18ed9f0c87ee2bb/root/proactor_LT_LT.png"></div>
 
 > * Proactor, LT + ET,
+<div align=center><img src="https://github.com/chenmengangzhi29/web_server/blob/c32d8d319151cd7ec8b9acfff18ed9f0c87ee2bb/root/proactor_LT_ET.png"></div>
 
 > * Proactor, ET + LT
+<div align=center><img src="https://github.com/chenmengangzhi29/web_server/blob/c32d8d319151cd7ec8b9acfff18ed9f0c87ee2bb/root/proactor_ET_LT.png"></div>
 
 > * Proactor, ET + ET
+<div align=center><img src="https://github.com/chenmengangzhi29/web_server/blob/c32d8d319151cd7ec8b9acfff18ed9f0c87ee2bb/root/proactor_ET_ET.png"></div>
 
 > * Reactor, LT + LT
+<div align=center><img src="https://github.com/chenmengangzhi29/web_server/blob/c32d8d319151cd7ec8b9acfff18ed9f0c87ee2bb/root/reactor_LT_LT.png"></div>
 
 > * Reactor, LT + ET
+<div align=center><img src="https://github.com/chenmengangzhi29/web_server/blob/c32d8d319151cd7ec8b9acfff18ed9f0c87ee2bb/root/reactor_LT_ET.png"></div>
 
 > * Reactor, ET + LT
+<div align=center><img src="https://github.com/chenmengangzhi29/web_server/blob/c32d8d319151cd7ec8b9acfff18ed9f0c87ee2bb/root/reactor_ET_LT.png"></div>
 
 > * Reactor, ET + ET
+<div align=center><img src="https://github.com/chenmengangzhi29/web_server/blob/c32d8d319151cd7ec8b9acfff18ed9f0c87ee2bb/root/reactor_ET_ET.png"></div>
 
 ## 快速开始
 
