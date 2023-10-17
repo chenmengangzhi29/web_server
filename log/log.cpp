@@ -1,6 +1,7 @@
 #include <string.h>
 #include <sys/time.h>
 #include <stdarg.h>
+#include <sys/stat.h>
 #include "log.h"
 using namespace std;
 
@@ -61,6 +62,7 @@ bool Log::init(const char *file_name, int close_log, int log_buf_size, int split
     {
         return false;
     }
+
     return true;
 }
 
@@ -95,7 +97,7 @@ void Log::write_log(int level, const char *format, ...)
     m_mutex.lock();
     m_count++;
 
-    if(m_today != my_tm.tm_mday || m_count % m_split_lines == 0) // everyday log
+    if(m_today != my_tm.tm_mday || m_count / m_split_lines != 0) // everyday log
     {
         char new_log[256] = {0};
         fflush(m_fp);

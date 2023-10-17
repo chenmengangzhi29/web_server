@@ -15,6 +15,10 @@ WebServer::WebServer()
 
     //定时器
     users_timer = new client_data[MAX_FD];
+
+    //数据库
+    m_url = "localhost";
+    m_sql_port = 3306;
 }
 
 WebServer::~WebServer()
@@ -29,7 +33,8 @@ WebServer::~WebServer()
 }
 
 void WebServer::init(int port, string user, string passWord, string databaseName, int log_write,
-                     int opt_linger, int trigmode, int sql_num, int thread_num, int close_log, int actor_model)
+                     int opt_linger, int trigmode, int sql_num, int thread_num, int close_log, 
+                     int actor_model, int close_sql_pool)
 {
     m_port = port;
     m_user = user;
@@ -42,6 +47,7 @@ void WebServer::init(int port, string user, string passWord, string databaseName
     m_TRIGMode = trigmode;
     m_close_log = close_log;
     m_actormodel = actor_model;
+    m_close_sql_pool = close_sql_pool;
 }  
 
 void WebServer::trig_mode()
@@ -86,18 +92,34 @@ void WebServer::log_write()
 
 void WebServer::sql_pool()
 {
-    //初始化数据库连接池
-    m_connPool = connection_pool::GetInstance();
-    m_connPool->init("localhost", m_user, m_passWord, m_databaseName, 3306, m_sql_num, m_close_log);
+    MYSQL *mysql = NULL;
+    if(0 == m_close_sql_pool)
+    {
+        //初始化数据库连接池
+        m_connPool = connection_pool::GetInstance();
+        m_connPool->init(m_url, m_user, m_passWord, m_databaseName, m_sql_port, m_sql_num, m_close_log);
 
-    //初始化数据库读取表
-    users->initmysql_result(m_connPool);
+        //先从连接池中取一个连接
+        connectionRAII mysqlcon(&mysql, m_connPool);
+
+        //初始化数据库读取表
+        users->initmysql_result(mysql);
+    }
+    else
+    {
+        connection conn(m_url, m_sql_port, m_user, m_passWord, m_databaseName, m_close_log);
+        mysql = conn.GetConnection();
+
+        //初始化数据库读取表
+        users->initmysql_result(mysql);
+    }
+
 }
 
 void WebServer::thread_pool()
 {
     //线程池
-    m_pool = new threadpool<http_conn>(m_connPool, m_actormodel, m_thread_num);
+    m_pool = new threadpool<http_conn>(m_url, m_sql_port, m_user, m_passWord, m_databaseName, m_close_log, m_close_sql_pool, m_connPool, m_actormodel, m_thread_num);
 }
 
 void WebServer::eventListen()

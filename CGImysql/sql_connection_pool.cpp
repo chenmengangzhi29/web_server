@@ -3,6 +3,36 @@
 
 using namespace std;
 
+connection::connection(string url, int Port, string User, string PassWord, string DatabaseName, int m_close_log)
+{
+
+    m_Conn = NULL;
+    m_Conn = mysql_init(m_Conn);
+    if (m_Conn == NULL)
+    {
+        LOG_ERROR("Mysql Init Error");
+        exit(1);
+    }
+    m_Conn = mysql_real_connect(m_Conn, url.c_str(), User.c_str(), PassWord.c_str(), DatabaseName.c_str(), Port, NULL, 0);
+    if(m_Conn == NULL)
+    {
+        LOG_ERROR("Mysql Connect Error");
+        exit(1);
+    }
+
+}
+
+connection::~connection()
+{
+    mysql_close(m_Conn);
+}
+
+MYSQL* connection::GetConnection()
+{
+    return m_Conn;
+}
+
+
 connection_pool::connection_pool()
 {
     m_CurConn = 0;

@@ -8,7 +8,7 @@ then
 elif [ $1 = "git" ]
 then
 	git add .
-	git commit -m "更新README.md"
+	git commit -m "增加关闭数据库连接池的相关代码, 修复日志系统问题"
 	git checkout -b feature
 	git push origin feature
 	git checkout main

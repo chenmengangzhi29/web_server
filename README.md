@@ -1,5 +1,13 @@
 # web_server
 
+## 项目简介
+epoll + socket + mmap + pipe + signal + mutex + cond + semaphore + tcp + mysql + 单例模式 
+- 实现 **线程池 + 非阻塞socket + epoll(ET和LT均实现) + 事件处理(Reactor和模拟Proactor均实现)** 的并发模型
+- 使用**主从状态机**解析HTTP请求报文，支持解析**GET和POST**请求
+- 实现用户 **注册、登录**功能，支持请求服务器**图片和视频文件**
+- 实现**同步/异步日志系统**，记录服务器运行状态。实现**数据库连接池**提升数据库读写速度。实现**定时器**处理非活动连接
+- 经Webbench压力测试，可实现**上万的并发连接**数据交换
+
 ## webserver架构图
 
 <div align=center><img src="https://github.com/chenmengangzhi29/web_server/blob/5be2474182a825a34191d6ec5ff8d8c1d8246937/root/webserver%E6%9E%B6%E6%9E%84%E5%9B%BE.png"> </div>

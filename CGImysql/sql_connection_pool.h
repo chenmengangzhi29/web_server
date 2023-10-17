@@ -15,12 +15,23 @@
 
 using namespace std;
 
+class connection{
+public:
+    connection(string url, int Port, string User, string PassWord, string DatabaseName, int m_close_log);
+    ~connection();
+
+    MYSQL *GetConnection();
+
+private:
+    MYSQL * m_Conn;
+};
+
 class connection_pool
 {
 public:
     MYSQL *GetConnection();                 //获取数据库连接
     bool ReleaseConnection(MYSQL *conn);    //释放连接
-    int GetFreeConn();                      //获取连接
+    int GetFreeConn();                      //获取空闲连接数
     void DestroyPool();                     //销毁所有连接
 
     //单例模式
@@ -41,7 +52,7 @@ private:
 
 public:
     string m_url;           //主机地址
-    string m_Port;          //数据库端口号
+    int m_Port;          //数据库端口号
     string m_User;          //登陆数据库用户名
     string m_PassWord;      //登陆数据库密码
     string m_DatabaseName;  //使用数据库名

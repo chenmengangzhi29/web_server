@@ -19,6 +19,9 @@ Config::Config(){
     //优雅关闭链接，默认不使用
     OPT_LINGER = 0;
 
+    //关闭数据库连接池，默认不关闭
+    close_sql_pool = 0;
+
     //数据库连接池中连接数量，默认8
     sql_num = 8;
 
@@ -34,7 +37,7 @@ Config::Config(){
 
 void Config::parse_arg(int argc, char* argv[]){
     int opt;
-    const char *str = "p:l:m:o:s:t:c:a:";
+    const char *str = "p:l:m:o:s:t:c:a:q:";
     while((opt = getopt(argc, argv, str)) != -1)
     {
         switch (opt)
@@ -77,6 +80,11 @@ void Config::parse_arg(int argc, char* argv[]){
             case 'a':
             {
                 actor_model = atoi(optarg);
+                break;
+            }
+            case 'q':
+            {
+                close_sql_pool = atoi(optarg);
                 break;
             }
             default:

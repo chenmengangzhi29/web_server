@@ -73,7 +73,7 @@ public:
     {
         return &m_address;
     }
-    void initmysql_result(connection_pool *connPool);
+    void initmysql_result(MYSQL* mysql);
     int timer_flag;
     int improv;
 
