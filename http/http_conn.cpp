@@ -19,11 +19,8 @@ locker m_lock;
 map<string, string> users;
 
 // 获取数据库中的用户名和密码信息
-void http_conn::initmysql_result(connection_pool *connPool)
+void http_conn::initmysql_result(MYSQL* mysql)
 {   
-    //先从连接池中取一个连接
-    MYSQL *mysql = NULL;
-    connectionRAII mysqlcon(&mysql, connPool);
 
     //在user表中检索username, passwd数据， 浏览器端输入
     if (mysql_query(mysql, "SELECT username,passwd FROM user"))

@@ -33,6 +33,9 @@ public:
     //优雅关闭连接
     int OPT_LINGER;
 
+    // 是否关闭数据库连接池
+    int close_sql_pool;
+
     //数据库连接池中连接数量
     int sql_num;
 

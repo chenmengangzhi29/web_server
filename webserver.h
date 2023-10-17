@@ -19,7 +19,7 @@ public:
 
     void init(int port, string user, string passWord, string databaseName,
               int log_write, int opt_linger, int trigmode, int sql_num,
-              int thread_num, int close_log, int actor_model);
+              int thread_num, int close_log, int actor_model, int close_sql_pool);
 
     void thread_pool();
     void sql_pool();
@@ -42,6 +42,7 @@ public:
     int m_log_write;//日志写入方式，默认同步
     int m_close_log;//关闭日志，默认不关闭
     int m_actormodel;
+    int m_close_sql_pool;
 
     int m_pipefd[2];
     int m_epollfd;
@@ -49,6 +50,8 @@ public:
 
     //数据库相关
     connection_pool *m_connPool;
+    string m_url;
+    int m_sql_port;
     string m_user;          //登陆数据库用户名
     string m_passWord;      //登陆数据库密码
     string m_databaseName;  //使用数据库名

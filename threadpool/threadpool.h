@@ -13,7 +13,8 @@ class threadpool
 {
 public:
     /*thread_number是线程池中线程的数量，max_requests是请求队列中最多允许的、等待处理的请求的数量*/
-    threadpool(connection_pool *connPool, int actor_model, int thread_number = 8, int max_request = 10000);
+    threadpool(string url, int Port, string User, string PassWord, string DatabaseName, int close_log, int close_sql_pool, connection_pool *connPool, 
+              int actor_model, int thread_number = 8, int max_request = 10000);
     ~threadpool();
     bool append(T *request, int state);
     bool append_p(T *request);
@@ -24,7 +25,15 @@ private:
     void run();
 
 private:
+    string m_url;
+    int m_Port;
+    string m_User;
+    string m_PassWord;
+    string m_DatabaseName;
+    int m_close_log;
+    int m_close_sql_pool;           //是否关闭数据库连接池
     connection_pool *m_connPool;    //数据库
+
     int m_actor_model;              //模型切换
     int m_thread_number;            //线程池中的线程数
     int m_max_requests;             //请求队列中允许的最大请求数
@@ -37,8 +46,10 @@ private:
 };
 
 template <typename T>
-threadpool<T>::threadpool(connection_pool *connPool, int actor_model, int thread_number, int max_requests)
-    : m_connPool(connPool), m_actor_model(actor_model), m_thread_number(thread_number), m_max_requests(max_requests), m_threads(NULL)
+threadpool<T>::threadpool(string url, int Port, string User, string PassWord, string DatabaseName, int close_log, int close_sql_pool, connection_pool *connPool, 
+                          int actor_model, int thread_number, int max_requests)
+    : m_url(url), m_Port(Port), m_User(User), m_PassWord(PassWord), m_DatabaseName(DatabaseName), m_close_log(close_log), m_close_sql_pool(close_sql_pool), m_connPool(connPool), 
+      m_actor_model(actor_model), m_thread_number(thread_number), m_max_requests(max_requests), m_threads(NULL)
 {
     if (thread_number <= 0 || max_requests <= 0)
         throw std::exception();
@@ -124,8 +135,18 @@ void threadpool<T>::run()
                 if (request->read_once())
                 {
                     request->improv = 1;
-                    connectionRAII mysqlcon(&request->mysql, m_connPool);
-                    request->process();
+                    if(m_close_sql_pool == 0)
+                    {
+                        connectionRAII mysqlcon(&request->mysql, m_connPool);
+                        request->process();
+                    }
+                    else
+                    {
+                        connection conn(m_url, m_Port, m_User, m_PassWord, m_DatabaseName, m_close_log);
+                        request->mysql = conn.GetConnection();
+                        request->process();
+                    }
+
                 }
                 else
                 {
@@ -148,8 +169,17 @@ void threadpool<T>::run()
         }
         else
         {
-            connectionRAII mysqlcon(&request->mysql, m_connPool);
-            request->process();
+            if (m_close_sql_pool == 0)
+            {
+                connectionRAII mysqlcon(&request->mysql, m_connPool);
+                request->process();
+            }
+            else
+            {
+                connection conn(m_url, m_Port, m_User, m_PassWord, m_DatabaseName, m_close_log);
+                request->mysql = conn.GetConnection();
+                request->process();
+            }
         }
     }
 }
